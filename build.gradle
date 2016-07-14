@@ -1,12 +1,24 @@
-apply plugin: 'java'
-apply plugin: 'maven'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-repositories {
+buildscript {
+  repositories {
     jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.2.0-alpha5'
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
-group='com.github.s0nerik'
+allprojects {
+  repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+  }
+}
 
-dependencies {
-    compile 'io.reactivex:rxjava:1.1.6'
+task clean(type: Delete) {
+  delete rootProject.buildDir
 }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -40,14 +39,14 @@ public class RxList<E> implements List<E> {
     @Override
     public void add(int location, E object) {
         innerList.add(location, object);
-        eventsSubject.onNext(Event.create(Event.Type.ITEM_ADDED, location, object));
+        eventsSubject.onNext(Event.create(Event.ITEM_ADDED, location, object));
     }
 
     @Override
     public boolean add(E object) {
         boolean result = innerList.add(object);
         if (result) {
-            eventsSubject.onNext(Event.create(Event.Type.ITEM_ADDED, innerList.size(), object));
+            eventsSubject.onNext(Event.create(Event.ITEM_ADDED, innerList.size(), object));
         }
         return result;
     }
@@ -58,7 +57,7 @@ public class RxList<E> implements List<E> {
         if (result) {
             int i = location;
             for (E item : collection) {
-                eventsSubject.onNext(Event.create(Event.Type.ITEM_ADDED, i++, item));
+                eventsSubject.onNext(Event.create(Event.ITEM_ADDED, i++, item));
             }
         }
         return result;
@@ -71,7 +70,7 @@ public class RxList<E> implements List<E> {
         if (result) {
             int i = startIndex;
             for (E item : collection) {
-                eventsSubject.onNext(Event.create(Event.Type.ITEM_ADDED, i++, item));
+                eventsSubject.onNext(Event.create(Event.ITEM_ADDED, i++, item));
             }
         }
         return result;
@@ -84,12 +83,12 @@ public class RxList<E> implements List<E> {
             innerList.clear();
             int i = 0;
             for (E oldItem : oldItems) {
-                eventsSubject.onNext(Event.create(Event.Type.ITEM_REMOVED, i++, oldItem));
+                eventsSubject.onNext(Event.create(Event.ITEM_REMOVED, i++, oldItem));
             }
         } else {
             innerList.clear();
         }
-        eventsSubject.onNext(Event.create(Event.Type.ITEMS_CLEARED, -1, (E) null));
+        eventsSubject.onNext(Event.create(Event.ITEMS_CLEARED, -1, (E) null));
     }
 
     @Override
@@ -140,7 +139,7 @@ public class RxList<E> implements List<E> {
     @Override
     public E remove(int location) {
         E removedItem = innerList.remove(location);
-        eventsSubject.onNext(Event.create(Event.Type.ITEM_REMOVED, location, removedItem));
+        eventsSubject.onNext(Event.create(Event.ITEM_REMOVED, location, removedItem));
         return removedItem;
     }
 
@@ -149,7 +148,7 @@ public class RxList<E> implements List<E> {
         int removedIndex = innerList.indexOf(object);
         boolean result = innerList.remove(object);
         if (result) {
-            eventsSubject.onNext(Event.create(Event.Type.ITEM_REMOVED, removedIndex, (E) object));
+            eventsSubject.onNext(Event.create(Event.ITEM_REMOVED, removedIndex, (E) object));
         }
         return result;
     }
@@ -170,7 +169,7 @@ public class RxList<E> implements List<E> {
         if (result) {
             int i = 0;
             for (Object removedItem : removedItems) {
-                eventsSubject.onNext(Event.create(Event.Type.ITEM_REMOVED, indices.get(i++), (E) removedItem));
+                eventsSubject.onNext(Event.create(Event.ITEM_REMOVED, indices.get(i++), (E) removedItem));
             }
         }
 
@@ -195,7 +194,7 @@ public class RxList<E> implements List<E> {
         if (result) {
             int i = 0;
             for (Object removedItem : removedItems) {
-                eventsSubject.onNext(Event.create(Event.Type.ITEM_REMOVED, indices.get(i++), (E) removedItem));
+                eventsSubject.onNext(Event.create(Event.ITEM_REMOVED, indices.get(i++), (E) removedItem));
             }
         }
 
@@ -205,7 +204,7 @@ public class RxList<E> implements List<E> {
     @Override
     public E set(int location, E object) {
         E previous = innerList.set(location, object);
-        eventsSubject.onNext(Event.create(Event.Type.ITEM_CHANGED, location, object));
+        eventsSubject.onNext(Event.create(Event.ITEM_CHANGED, location, object));
         return previous;
     }
 
